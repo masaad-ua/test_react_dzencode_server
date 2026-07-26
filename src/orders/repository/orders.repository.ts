@@ -1,15 +1,15 @@
 import {Injectable} from "@nestjs/common";
-import { orders, OrderData } from '../data/orders.data';
+import { orders, OrderDataI } from '../data/orders.data';
 
 @Injectable()
 export class OrdersRepository {
     private readonly orders = orders;
 
-    findAll(): OrderData[]{
+    findAll(): OrderDataI[]{
         return this.orders;
     }
 
-    findById(id: number): OrderData | undefined {
+    findById(id: number): OrderDataI | undefined {
         return this.orders.find((order) => order.id === id);
     }
 

@@ -9,11 +9,27 @@ export class OrdersService {
         private readonly productsRepository: ProductsRepository
     ){}
 
-    findAll(){
-        return this.ordersRepository.findAll().map((order) => ({
+    findAll(page = 1, limit = 20) {
+        const orders = this.ordersRepository.findAll();
+
+        const start = (page - 1) * limit;
+        const end = start + limit;
+
+        const items = orders.slice(start, end).map((order) => ({
             ...order,
-            products: this.productsRepository.findByOrderId(order.id)
+            products: this.productsRepository.findByOrderId(order.id),
         }));
+
+        return {
+            data: items,
+            pagination: {
+                page,
+                limit,
+                total: orders.length,
+                totalPages: Math.ceil(orders.length / limit),
+                hasNextPage: end < orders.length,
+            },
+        };
     }
 
     findOne(id: number) {

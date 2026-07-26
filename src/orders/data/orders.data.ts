@@ -1,28 +1,43 @@
+import {Data} from "../../shared/data";
+import {ProductDataI, ProductsDate} from "../../products/data/products.data";
 
-export interface OrderData {
+export interface OrderDataI {
     id: number;
     title: string;
-    date: string;
+    date: Date;
     description: string;
 }
 
-export const orders: OrderData[] = [
-    {
-        id: 1,
-        title: 'Order 1',
-        date: '2017-06-29 12:09:33',
-        description: 'desc',
-    },
-    {
-        id: 2,
-        title: 'Order 2',
-        date: '2017-06-29 12:09:33',
-        description: 'desc',
-    },
-    {
-        id: 3,
-        title: 'Order 3',
-        date: '2017-06-29 12:09:33',
-        description: 'desc',
-    },
-];
+class OrdersDate extends Data<OrderDataI>{
+    constructor(amount: number, startId: number) {
+        super(amount, startId)
+    }
+
+    public createOrders(year: number){
+        let i = 0
+        while ( i <= this.amount ){
+            this.items.push({
+                id: this.startId++,
+                title: this.getTitle(),
+                date: this.getRandomDateInYear(year),
+                description: "",
+            })
+            ++i
+        }
+    }
+
+    private getTitle(): string {
+        if(this.startId % 2){
+            return "Длинное название прихода"
+        }
+        else {
+            return "Длинное предлинное длинючее название прихода"
+        }
+    }
+
+}
+
+const orderDate: OrdersDate = new OrdersDate(25, 1);
+orderDate.createOrders(2017)
+export const orders: OrderDataI[] = orderDate.items;
+

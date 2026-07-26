@@ -1,6 +1,9 @@
+import {orders} from "../../orders/data/orders.data";
+import {Data} from "../../shared/data";
+
 export interface ProductGuaranteeI {
-    start: string,
-    end: string,
+    start: Date,
+    end: Date,
 }
 
 export interface ProductPriceI {
@@ -13,53 +16,113 @@ export interface ProductDataI {
     id: number;
     serialNumber: number,
     isNew: number,
+    status: number,
     photo: string,
     title: string,
+    series: string,
     type: string,
     specification: string,
     guarantee: ProductGuaranteeI
     price: ProductPriceI[],
     order: number,
-    date: string,
+    date: Date,
 }
 
-export const products: ProductDataI [] = [
-    {
-        id: 1,
-        serialNumber: 1234,
-        isNew: 1,
-        photo: '',
-        title: 'Product 1',
-        type: 'Monitors',
-        specification: 'Specification 1',
-        guarantee: {
-            start: '2017-06-29 12:09:33',
-            end: '2017-06-29 12:09:33'
-        },
-        price: [
-            {value: 100, symbol: 'USD', isDefault: 0},
-            {value: 2600, symbol: 'UAH', isDefault: 1}
-        ],
-        order: 1,
-        date: '2017-06-29 12:09:33'
-    },
-    {
-        id: 2,
-        serialNumber: 1234,
-        isNew: 1,
-        photo: '',
-        title: 'Product 1',
-        type: 'Monitors',
-        specification: 'Specification 1',
-        guarantee: {
-            start: '2017-06-29 12:09:33',
-            end: '2017-06-29 12:09:33'
-        },
-        price: [
-            {value: 100, symbol: 'USD', isDefault: 0},
-            {value: 2600, symbol: 'UAH', isDefault: 1}
-        ],
-        order: 2,
-        date: '2017-06-29 12:09:33'
+export class ProductsDate extends Data<ProductDataI>{
+    public products: ProductDataI [] = [];
+
+    constructor(amount: number, startId: number) {
+        super(amount, startId)
     }
-];
+
+    public createProducts(year: number, yearStart: number, yearEnd: number){
+        let i = 0
+        orders.forEach((order) =>{
+            const {title, series, type} = this.getProductDescription();
+
+            let i = 0
+            while ( i <= this.amount ){
+                this.items.push({
+                    id: this.startId++,
+                    serialNumber: 1235,
+                    isNew: this.getCondition(),
+                    status: this.getStatus(),
+                    photo: '',
+                    title: title,
+                    series: series,
+                    type: type,
+                    specification: 'Specification 1',
+                    guarantee: {
+                        start: this.getRandomDateInYear(yearStart),
+                        end: this.getRandomDateInYear(yearEnd)
+                    },
+                    price: [
+                        {value: 100, symbol: 'USD', isDefault: 0},
+                        {value: 2600, symbol: 'UAH', isDefault: 1}
+                    ],
+                    order: order.id,
+                    date: this.getRandomDateInYear(year),
+                })
+                ++i
+            }
+        })
+
+    }
+
+    private getProductDescription(): {
+        title: string,
+        series: string,
+        type: string
+    }  {
+        if (this.startId % 2 === 0){
+            return {
+                title: 'Gigabyte Technology X58-USB3 (Socket 1366) 6 X58-USB3',
+                series: "SN-12.3456789",
+                type: 'Monitors',
+            }
+        }
+        else if (this.startId % 3 === 0){
+            return {
+                title: 'HP LaserJet Pro M404dn',
+                series: 'SN-98.7654321',
+                type: 'Printers',
+            }
+        }
+        else if (this.startId % 7 === 0){
+            return {
+                title: 'Lenovo ThinkPad T14 Gen 3',
+                series: 'SN-82.7654321',
+                type: 'Laptops',
+            }
+        }
+        else {
+            return {
+                title: 'Microsoft Ergonomic Keyboard',
+                series: 'SN-43.9012345',
+                type: 'Keyboards',
+            }
+        }
+    }
+
+    private getStatus(): number{
+        if(this.startId % 2 === 1){
+            return 1
+        }
+        else {
+            return 0
+        }
+    }
+
+    private getCondition(): number {
+        if(this.startId % 3 === 0){
+            return 1
+        }
+        else {
+            return 0
+        }
+    }
+}
+
+const productDate: ProductsDate = new ProductsDate(20, 10)
+productDate.createProducts(2017, 2017, 2025);
+export const products: ProductDataI[] = productDate.items;

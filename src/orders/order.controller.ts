@@ -1,4 +1,4 @@
-import {Controller, Delete, Get, Param, ParseIntPipe} from "@nestjs/common";
+import {Controller, Delete, Get, Param, ParseIntPipe, Query} from "@nestjs/common";
 import {OrdersService} from "./orders.service";
 
 @Controller("orders")
@@ -6,8 +6,14 @@ export class OrdersController {
     constructor(private readonly ordersService: OrdersService) {}
 
     @Get()
-    findAll(){
-        return this.ordersService.findAll();
+    findAll(
+        @Query('page') page = 1,
+        @Query('limit') limit = 20,
+    ) {
+        return this.ordersService.findAll(
+            Number(page),
+            Number(limit),
+        );
     }
 
     @Get(":id")
