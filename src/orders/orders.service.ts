@@ -1,6 +1,7 @@
 import {Injectable, NotFoundException} from "@nestjs/common";
 import {OrdersRepository} from "./repository/orders.repository";
 import {ProductsRepository} from "../products/repository/products.repository";
+import {products} from "../products/data/products.data";
 
 @Injectable()
 export class OrdersService {
@@ -15,10 +16,17 @@ export class OrdersService {
         const start = (page - 1) * limit;
         const end = start + limit;
 
-        const items = orders.slice(start, end).map((order) => ({
-            ...order,
-            products: this.productsRepository.findByOrderId(order.id),
-        }));
+        const items = orders.slice(start, end).map((order) => {
+            const products =  this.productsRepository.findByOrderId(order.id);
+
+            return  {
+                ...order,
+                products,
+                productsCount: products.length,
+                totalUSD: products.reduce((sum, product)=> sum + product.price[0].value, 0),
+                totalUAH: products.reduce((sum, product)=> sum + product.price[1].value, 0),
+            }
+    });
 
         return {
             data: items,

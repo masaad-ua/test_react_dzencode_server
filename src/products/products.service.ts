@@ -10,11 +10,32 @@ export class ProductsService {
         private readonly productsRepository: ProductsRepository
     ){}
 
-    findAll(type?: string){
+    findAll(type?: string, page = 1, limit = 20){
+        let products;
         if(type){
-            return this.productsRepository.findByType(type);
+            products = this.productsRepository.findByType(type);
         }
-        return this.productsRepository.findAll();
+        else {
+            products = this.productsRepository.findAll();
+        }
+
+        const start = (page - 1) * limit;
+        const end = start + limit;
+
+        const items = products.slice(start, end).map((product) => ({
+            ...product,
+        }));
+
+        return {
+            data: items,
+            pagination: {
+                page,
+                limit,
+                total: products.length,
+                totalPages: Math.ceil(products.length / limit),
+                hasNextPage: end < products.length,
+            },
+        };
     }
 
     findOne(id: number) {

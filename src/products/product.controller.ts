@@ -6,8 +6,16 @@ export class ProductController {
     constructor(private readonly productsService: ProductsService) {}
 
     @Get()
-    findAll(@Query("type") type?: string){
-        return this.productsService.findAll(type)
+    findAll(
+        @Query("type") type?: string,
+        @Query('page') page = 1,
+        @Query('limit') limit = 20,
+        ){
+        return this.productsService.findAll(
+            type,
+            Number(page),
+            Number(limit),
+        )
     }
 
     @Get(':id')

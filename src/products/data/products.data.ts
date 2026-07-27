@@ -29,8 +29,6 @@ export interface ProductDataI {
 }
 
 export class ProductsDate extends Data<ProductDataI>{
-    public products: ProductDataI [] = [];
-
     constructor(amount: number, startId: number) {
         super(amount, startId)
     }
@@ -38,10 +36,9 @@ export class ProductsDate extends Data<ProductDataI>{
     public createProducts(year: number, yearStart: number, yearEnd: number){
         let i = 0
         orders.forEach((order) =>{
-            const {title, series, type} = this.getProductDescription();
-
             let i = 0
             while ( i <= this.amount ){
+                const {title, series, type} = this.getProductDescription();
                 this.items.push({
                     id: this.startId++,
                     serialNumber: 1235,
@@ -57,8 +54,8 @@ export class ProductsDate extends Data<ProductDataI>{
                         end: this.getRandomDateInYear(yearEnd)
                     },
                     price: [
-                        {value: 100, symbol: 'USD', isDefault: 0},
-                        {value: 2600, symbol: 'UAH', isDefault: 1}
+                        {value: this.getValueForPrice(), symbol: 'USD', isDefault: 0},
+                        {value: this.getValueForPrice(), symbol: 'UAH', isDefault: 1}
                     ],
                     order: order.id,
                     date: this.getRandomDateInYear(year),
@@ -78,28 +75,28 @@ export class ProductsDate extends Data<ProductDataI>{
             return {
                 title: 'Gigabyte Technology X58-USB3 (Socket 1366) 6 X58-USB3',
                 series: "SN-12.3456789",
-                type: 'Monitors',
+                type: 'Monitor',
             }
         }
         else if (this.startId % 3 === 0){
             return {
                 title: 'HP LaserJet Pro M404dn',
                 series: 'SN-98.7654321',
-                type: 'Printers',
+                type: 'Printer',
             }
         }
         else if (this.startId % 7 === 0){
             return {
                 title: 'Lenovo ThinkPad T14 Gen 3',
                 series: 'SN-82.7654321',
-                type: 'Laptops',
+                type: 'Laptop',
             }
         }
         else {
             return {
                 title: 'Microsoft Ergonomic Keyboard',
                 series: 'SN-43.9012345',
-                type: 'Keyboards',
+                type: 'Keyboard',
             }
         }
     }
@@ -120,6 +117,10 @@ export class ProductsDate extends Data<ProductDataI>{
         else {
             return 0
         }
+    }
+
+    private getValueForPrice(): number {
+        return Math.floor( Math.random() * (4901)) + 100
     }
 }
 
