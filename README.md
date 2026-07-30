@@ -1,98 +1,229 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Inventory Management Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend-часть тестового проекта **Orders & Products**, разработанная на **NestJS**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Проект предоставляет REST API для работы с приходами (Orders) и продуктами (Products), поддерживает пагинацию, удаление данных и документирование API с помощью Swagger.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# Стек технологий
 
-## Project setup
+- NestJS
+- TypeScript
+- Docker
+- Swagger
+- Class Validator
+- Class Transformer
 
-```bash
-$ npm install
+---
+
+# Функциональность
+
+- Получение списка приходов
+- Получение списка продуктов
+- Пагинация данных
+- Получение продуктов по приходу
+- Удаление прихода
+- Каскадное удаление связанных продуктов
+- REST API
+- Документация Swagger
+
+---
+
+# Структура проекта
+
+```
+src/
+│
+├── common/
+│
+├── config/
+│
+├── orders/
+│   ├── controller/
+│   ├── service/
+│   ├── entity/
+│   ├── dto/
+│   └── repository/
+│
+├── products/
+│   ├── controller/
+│   ├── service/
+│   ├── entity/
+│   ├── dto/
+│   └── repository/
+│
+├── app.module.ts
+└── main.ts
 ```
 
-## Compile and run the project
+---
+
+# Запуск проекта
+
+## Установка зависимостей
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+---
+
+## Создание файла окружения
+
+Создать файл
+
+```
+.env
+```
+
+пример содержимого:
+
+```env
+PORT=3000
+JWT_SECRET=secret_key
+```
+
+---
+
+## Запуск в режиме разработки
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start:dev
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Production
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run build
+npm run start:prod
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+# Docker
 
-Check out a few resources that may come in handy when working with NestJS:
+Сборка образа
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+docker build -t orders_products_backend .
+```
 
-## Support
+Запуск контейнера
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+docker run -p 3000:3000 orders_products_backend
+```
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# API
 
-## License
+После запуска приложение будет доступно по адресу
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```
+http://localhost:3000
+```
+
+---
+
+## Swagger
+
+Документация API
+
+```
+http://localhost:3000/api/docs
+```
+
+---
+
+# Основные эндпоинты
+
+## Orders
+
+Получить список приходов
+
+```
+GET /api/orders?page=1&limit=20
+```
+
+Удалить приход
+
+```
+DELETE /api/orders/:id
+```
+
+---
+
+## Products
+
+Получить список продуктов
+
+```
+GET /api/products?page=1&limit=20
+```
+
+Получить продукты определенного прихода
+
+```
+GET /api/products/order/:orderId
+```
+
+---
+
+# Хранение данных
+
+На текущем этапе проект **не использует реальную базу данных**.
+
+Для целей тестового задания данные генерируются при запуске приложения в памяти сервера (mock data) с использованием TypeScript-классов.
+
+Генерируются две коллекции:
+
+- Orders (приходы)
+- Products (товары)
+
+Каждый продукт связан с определенным приходом через поле `order`.
+
+Такой подход позволил реализовать всю бизнес-логику приложения без подключения СУБД.
+
+---
+
+# Схема базы данных
+
+Несмотря на использование mock-данных, была спроектирована схема базы данных, отражающая предполагаемую структуру хранения данных.
+
+В каталоге `database/` находятся:
+
+- `orders_products_db.sql` — SQL-скрипт создания схемы;
+- `orders_products_db.mwb` — модель MySQL Workbench.
+
+Эта схема демонстрирует, как данные были бы организованы при использовании MySQL.
+
+# Возможности проекта
+
+- REST API
+- Пагинация
+- Каскадное удаление связанных данных
+- Валидация DTO
+- Документирование Swagger
+- Контейнеризация Docker
+
+---
+
+# Git Flow
+
+При разработке использовалась стратегия **Git Flow**.
+
+Основные ветки:
+
+- **main** — стабильная версия проекта.
+- **develop** — основная ветка разработки.
+- **feature/*** — разработка отдельных задач.
+
+---
+
+# Автор
+
+Максим Осипчук
