@@ -1,4 +1,4 @@
-# Orders & Products Management Backend
+# Orders & Products Backend
 
 Backend-часть тестового проекта **Orders & Products**, разработанная на **NestJS**.
 
@@ -24,7 +24,7 @@ Backend-часть тестового проекта **Orders & Products**, ра
 - Пагинация данных
 - Получение продуктов по приходу
 - Удаление прихода
-- Каскадное удаление связанных продуктов
+- Удаление прихода вместе со связанными продуктами
 - REST API
 - Документация Swagger
 
@@ -35,25 +35,39 @@ Backend-часть тестового проекта **Orders & Products**, ра
 ```
 src/
 │
-├── common/
-│
-├── config/
+├── auth/
+│   ├── dto/
+│   ├── auth.controller.ts
+│   ├── auth.module.ts
+│   ├── auth.service.ts
+│   ├── constants.ts
+│   ├── jwt.strategy.ts
+│   └── jwt-auth.guard.ts
 │
 ├── orders/
-│   ├── controller/
-│   ├── service/
-│   ├── entity/
-│   ├── dto/
-│   └── repository/
+│   ├── data/
+│   ├── repository/
+│   ├── order.controller.ts
+│   ├── orders.module.ts
+│   └── orders.service.ts
 │
 ├── products/
-│   ├── controller/
-│   ├── service/
-│   ├── entity/
-│   ├── dto/
-│   └── repository/
+│   ├── data/
+│   ├── repository/
+│   ├── product.controller.ts
+│   ├── products.module.ts
+│   └── products.service.ts
 │
+├── shared/
+│   └── data.ts
+│
+├── websocket/
+│   ├── websocket.gateway.ts
+│   └── websocket.module.ts
+│
+├── app.controller.ts
 ├── app.module.ts
+├── app.service.ts
 └── main.ts
 ```
 
@@ -146,7 +160,7 @@ http://localhost:3000/api/docs
 Получить список приходов
 
 ```
-GET /api/orders?page=1&limit=20
+GET /api/orders
 ```
 
 Получить приход по id
@@ -168,7 +182,7 @@ DELETE /api/orders/:id
 Получить список продуктов
 
 ```
-GET /api/products?page=1&limit=20
+GET /api/products
 ```
 
 Получить продукт по id
