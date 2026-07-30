@@ -149,6 +149,12 @@ http://localhost:3000/api/docs
 GET /api/orders?page=1&limit=20
 ```
 
+Получить приход по id
+
+```
+GET /api/orders/:id
+```
+
 Удалить приход
 
 ```
@@ -165,10 +171,10 @@ DELETE /api/orders/:id
 GET /api/products?page=1&limit=20
 ```
 
-Получить продукты определенного прихода
+Получить продукт по id
 
 ```
-GET /api/products/order/:orderId
+GET /api/products/:id
 ```
 
 ---
