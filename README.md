@@ -1,4 +1,4 @@
-# Inventory Management Backend
+# Orders & Products Management Backend
 
 Backend-часть тестового проекта **Orders & Products**, разработанная на **NestJS**.
 
