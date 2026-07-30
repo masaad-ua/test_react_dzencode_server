@@ -24,8 +24,8 @@ export interface ProductDataI {
     specification: string,
     guarantee: ProductGuaranteeI
     price: ProductPriceI[],
-    order: number,
-    date: Date,
+    orderId: number,
+    created_at: Date,
 }
 
 export class ProductsDate extends Data<ProductDataI>{
@@ -57,8 +57,8 @@ export class ProductsDate extends Data<ProductDataI>{
                         {value: this.getValueForPrice(), symbol: 'USD', isDefault: 0},
                         {value: this.getValueForPrice(), symbol: 'UAH', isDefault: 1}
                     ],
-                    order: order.id,
-                    date: this.getRandomDateInYear(year),
+                    orderId: order.id,
+                    created_at: this.getRandomDateInYear(year),
                 })
                 ++i
             }

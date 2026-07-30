@@ -4,7 +4,7 @@ import {ProductDataI, ProductsDate} from "../../products/data/products.data";
 export interface OrderDataI {
     id: number;
     title: string;
-    date: Date;
+    created_at: Date;
     description: string;
 }
 
@@ -19,7 +19,7 @@ class OrdersDate extends Data<OrderDataI>{
             this.items.push({
                 id: this.startId++,
                 title: this.getTitle(),
-                date: this.getRandomDateInYear(year),
+                created_at: this.getRandomDateInYear(year),
                 description: "",
             })
             ++i

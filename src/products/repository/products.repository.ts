@@ -15,7 +15,7 @@ export class ProductsRepository {
 
     findByOrderId(orderId: number): ProductDataI[]{
         return this.products.filter(
-            (product) => product.order === orderId,
+            (product) => product.orderId === orderId,
         );
     }
 
